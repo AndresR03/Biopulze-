@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Registro - BioPulse">
+    <title>Registro - BioPulse</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230d9488'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-nav">BioPulse</div>
+</header>
+
+<main class="main-auth">
+    <div class="auth-branding">
+        <div class="auth-branding-card">
+            <h2>Únete a BioPulse</h2>
+            <p>Crea tu cuenta y empieza a llevar el control de tus equipos biomédicos, mantenimientos y calibraciones de forma centralizada.</p>
+        </div>
+    </div>
+    <div class="auth-form-wrap">
+        <div class="welcome-card">
+            <h2>Registrarse</h2>
+            <form id="registerForm">
+                <input type="text" id="name" placeholder="Nombre" required>
+                <input type="email" id="email" placeholder="Correo" required>
+                <input type="tel" id="phone" placeholder="Teléfono (ej: +573001112233)" required>
+                <input type="password" id="password" placeholder="Contraseña (mín. 8 caracteres)" required minlength="8">
+                <p class="form-hint">Te enviaremos un código de verificación a tu correo.</p>
+                <button type="submit">Crear Cuenta</button>
+            </form>
+            <form id="verifyForm" style="display:none; margin-top: 15px;">
+                <p id="verifyMessage">Ingresa el código enviado a tu correo para activar tu cuenta.</p>
+                <input type="text" id="codigo" placeholder="Código de 6 dígitos" required>
+                <button type="submit">Verificar código</button>
+                <button type="button" id="btnResendCode" disabled style="margin-top: 8px; font-size: 0.875rem; background: transparent; color: var(--primary); border: none; cursor: pointer; text-decoration: underline;">Volver a enviar código (<span id="countdown">10</span>s)</button>
+            </form>
+            <p id="message"></p>
+            <a href="index.html">Volver</a>
+        </div>
+    </div>
+</main>
+
+<script src="js/toast.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>
