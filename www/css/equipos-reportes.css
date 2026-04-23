@@ -1,0 +1,313 @@
+/**
+ * Vista PC: Equipos y Reportes
+ * Card única ancha, sin huecos grandes; distribución cómoda y agradable.
+ */
+
+@media (min-width: 901px) {
+    .equipos-main,
+    .reportes-main {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: var(--space-md) var(--space-lg);
+        box-sizing: border-box;
+    }
+
+    /* Card que llena bien el espacio */
+    .reportes-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        flex: 1;
+        min-height: min(70vh, 600px);
+        min-width: 0;
+        display: grid;
+        grid-template-rows: 1fr;
+        gap: 0;
+        padding: var(--space-md);
+        align-items: stretch;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.97);
+        border: 2px solid var(--accent);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+    }
+
+    /* Equipos: contenedor ancho para usar todo el espacio (sin hueco a la derecha) */
+    .equipos-container {
+        width: 100%;
+        max-width: min(1600px, 96vw);
+        margin: 0 auto;
+        flex: 1;
+        min-height: min(70vh, 600px);
+        min-width: 0;
+        display: grid;
+        grid-template-rows: 1fr;
+        gap: 0;
+        padding: var(--space-md);
+        align-items: stretch;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.97);
+        border: 2px solid var(--accent);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+    }
+
+    /* Equipos: formulario fijo, lista usa todo el resto del ancho */
+    .equipos-container {
+        grid-template-columns: 380px minmax(0, 1fr);
+    }
+
+    .equipos-form-card,
+    .equipos-list-card {
+        min-width: 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0 var(--space-md) 0 0;
+    }
+
+    .equipos-form-card h2,
+    .equipos-list-card h2 {
+        margin-bottom: var(--space-sm);
+    }
+
+    /* Columna derecha: ocupa todo el espacio, sin dejar hueco en blanco */
+    .equipos-list-card {
+        padding-left: var(--space-md);
+        border-left: 1px solid #e2e8f0;
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* Contenedor de cards: ocupa todo el espacio (igual que en reportes) */
+    .equipos-list-card .equipos-cards-container {
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .equipos-list-card .table-container {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .equipos-list-card table {
+        width: 100% !important;
+        max-width: 100%;
+        min-width: 0;
+        table-layout: fixed;
+    }
+
+    /* Card de equipo: ocupa todo el ancho, sin quedar apretada */
+    .equipos-list-card .equipo-card {
+        min-width: 0;
+        align-self: stretch;
+    }
+
+    /* Formulario en 2 columnas: nombre, marca, modelo… hacia la derecha, sin scroll */
+    .equipos-form-card .equipo-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-sm) var(--space-md);
+        align-items: start;
+    }
+
+    .equipos-form-card .equipo-form-grid input,
+    .equipos-form-card .equipo-form-grid select {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .equipos-form-card .equipo-form-grid .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    .equipos-form-card .equipo-form-grid .form-field label {
+        margin-bottom: 0;
+    }
+
+    .equipos-form-card .equipo-form-grid .form-full-width {
+        grid-column: 1 / -1;
+    }
+
+    .equipos-form-card .equipo-form-grid hr {
+        margin: var(--space-sm) 0;
+        border: none;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .equipos-form-card .equipo-form-grid button {
+        width: 100%;
+    }
+
+    /* Reportes: filtros 260px | resultados ocupan el resto; las cards se distribuyen en ancho */
+    .reportes-container {
+        grid-template-columns: 260px 1fr;
+    }
+
+    .reportes-form-card {
+        min-width: 0;
+        max-width: 260px;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .reportes-form-card h2 {
+        margin-bottom: var(--space-sm);
+    }
+
+    .reportes-form-card .filtros-row,
+    .reportes-form-card .btn-group {
+        margin-top: var(--space-sm);
+    }
+
+    .reportes-list-card {
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0 0 0 var(--space-md);
+        border-left: 1px solid #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .reportes-list-card h2 {
+        margin-bottom: var(--space-sm);
+    }
+
+    .reportes-list-card .table-container {
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+        overflow-x: auto;
+        margin-top: var(--space-xs);
+    }
+
+    .reportes-list-card table {
+        width: 100%;
+        min-width: 100%;
+        table-layout: fixed;
+    }
+
+    /* Celdas con más espacio: se lee hacia la derecha, sin verse apretado */
+    .equipos-list-card th,
+    .equipos-list-card td,
+    .reportes-list-card th,
+    .reportes-list-card td {
+        /* padding: var(--space-md) var(--space-lg); */
+        white-space: nowrap; /* Evita que los títulos se partan en dos líneas */
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.85rem;
+    }
+}
+
+/* Tabs y historial (aplican en móvil y PC) */
+.hidden { display: none !important; }
+
+.equipos-tabs {
+    display: flex;
+    gap: var(--space-sm);
+    margin: var(--space-sm) 0 var(--space-sm);
+}
+
+.equipos-tab-btn {
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.equipos-tab-btn.active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+}
+
+.audit-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin: var(--space-sm) 0;
+    flex-wrap: wrap;
+}
+
+.audit-refresh {
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.audit-refresh:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+}
+
+.audit-hint {
+    color: #64748b;
+}
+
+.audit-message {
+    margin: var(--space-sm) 0;
+    color: #64748b;
+}
+
+.audit-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-height: 65vh;
+    overflow: auto;
+    padding-right: 4px;
+}
+
+.audit-item {
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(255,255,255,0.9);
+}
+
+.audit-item-main {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+.audit-item-action {
+    color: #334155;
+}
+
+.audit-item-id {
+    color: #64748b;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.audit-item-meta {
+    margin-top: 2px;
+    font-size: 0.85rem;
+    color: #64748b;
+}

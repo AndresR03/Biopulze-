@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dashboard - BioPulse">
+    <title>Dashboard - BioPulse</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230d9488'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo-nav">Gestión de Equipos Biomédicos</div>
+    <div class="header-user-wrap">
+        <button type="button" id="btnUserMenu" class="btn-power" aria-label="Mi cuenta" title="Mi cuenta">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <path d="M12 2v6M18.36 6.64a9 9 0 1 1-12.72 0"/>
+            </svg>
+        </button>
+        <div id="userMenuPanel" class="user-menu-panel hidden">
+            <div class="user-menu-header">
+                <div class="user-avatar-wrap">
+                    <img id="userMenuAvatar" class="user-avatar" src="" alt="" style="display:none;">
+                    <span id="userMenuAvatarPlaceholder" class="user-avatar-placeholder"></span>
+                </div>
+                <div class="user-menu-info">
+                    <strong id="userMenuNombre"></strong>
+                    <span id="userMenuCorreo" class="user-menu-correo"></span>
+                    <span id="userMenuTelefono" class="user-menu-telefono"></span>
+                    <span id="userMenuCargo" class="user-menu-cargo"></span>
+                </div>
+            </div>
+            <button type="button" id="btnUserEdit" class="btn-user-edit">Editar perfil</button>
+            <div id="userEditForm" class="user-edit-form hidden">
+                <label>Teléfono <input type="text" id="editTelefono" placeholder="Teléfono"></label>
+                <label>Cargo <input type="text" id="editCargo" placeholder="Cargo"></label>
+                <label>Nueva contraseña (dejar en blanco para no cambiar) <input type="password" id="editPassword" placeholder="Nueva contraseña"></label>
+                <label>Imagen de perfil <input type="file" id="editImagen" accept="image/*"></label>
+                <div id="editImagenPreview" class="edit-imagen-preview"></div>
+                <div class="user-edit-actions">
+                    <button type="button" id="btnUserSave">Guardar</button>
+                    <button type="button" id="btnUserCancelEdit" class="btn-user-cancel">Cancelar</button>
+                </div>
+            </div>
+            <p id="userMenuMessage" class="user-menu-message"></p>
+            <button type="button" id="btnUserLogout" class="btn-user-logout">Cerrar sesión</button>
+        </div>
+    </div>
+</header>
+
+<main class="main-dashboard">
+<div class="dashboard-inner">
+<div class="dashboard-menu">
+    <button onclick="location.href='equipos.html'">Equipos</button>
+    <button onclick="location.href='reportes.html'">Reportes</button>
+</div>
+
+<div class="dashboard-container">
+
+    <div class="stat-card">
+        <h3>Total de Equipos</h3>
+        <p id="totalEquipos">0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Equipos Operativos</h3>
+        <p id="equiposOperativos">0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>En Mantenimiento</h3>
+        <p id="equiposMantenimiento">0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Fuera de Servicio</h3>
+        <p id="equiposFueraServicio">0</p>
+    </div>
+
+</div>
+
+<div class="maintenance-container">
+    <div class="maintenance-card">
+        <h3>Próximos mantenimientos</h3>
+        <p id="mensajeProximos"></p>
+        <div class="maintenance-card-body">
+            <div class="maintenance-list">
+                <ul id="listaProximos"></ul>
+            </div>
+            <div class="maintenance-detail" id="detalleEquipo">
+                <p>Selecciona un equipo de la lista.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</main>
+
+<script src="js/auth.js"></script>
+<script src="js/session.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/user-menu.js"></script>
+
+</body>
+</html>

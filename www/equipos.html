@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Equipos biomédicos - BioPulse">
+  <title>Equipos - BioPulse</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230d9488'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/equipos-reportes.css">
+</head>
+
+<body>
+
+<header class="navbar">
+  <h2>Gestión de Equipos Biomédicos</h2>
+  <div class="navbar-actions">
+    <button type="button" onclick="window.location.href='dashboard.html'">Volver al dashboard</button>
+    <div class="header-user-wrap">
+      <button type="button" id="btnUserMenu" class="btn-power" aria-label="Mi cuenta" title="Mi cuenta">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M12 2v6M18.36 6.64a9 9 0 1 1-12.72 0"/>
+        </svg>
+      </button>
+      <div id="userMenuPanel" class="user-menu-panel hidden">
+        <div class="user-menu-header">
+          <div class="user-avatar-wrap">
+            <img id="userMenuAvatar" class="user-avatar" src="" alt="" style="display:none;">
+            <span id="userMenuAvatarPlaceholder" class="user-avatar-placeholder"></span>
+          </div>
+          <div class="user-menu-info">
+            <strong id="userMenuNombre"></strong>
+            <span id="userMenuCorreo" class="user-menu-correo"></span>
+            <span id="userMenuTelefono" class="user-menu-telefono"></span>
+            <span id="userMenuCargo" class="user-menu-cargo"></span>
+          </div>
+        </div>
+        <button type="button" id="btnUserEdit" class="btn-user-edit">Editar perfil</button>
+        <div id="userEditForm" class="user-edit-form hidden">
+          <label>Teléfono <input type="text" id="editTelefono" placeholder="Teléfono"></label>
+          <label>Cargo <input type="text" id="editCargo" placeholder="Cargo"></label>
+          <label>Nueva contraseña (dejar en blanco para no cambiar) <input type="password" id="editPassword" placeholder="Nueva contraseña"></label>
+          <label>Imagen de perfil <input type="file" id="editImagen" accept="image/*"></label>
+          <div id="editImagenPreview" class="edit-imagen-preview"></div>
+          <div class="user-edit-actions">
+            <button type="button" id="btnUserSave">Guardar</button>
+            <button type="button" id="btnUserCancelEdit" class="btn-user-cancel">Cancelar</button>
+          </div>
+        </div>
+        <p id="userMenuMessage" class="user-menu-message"></p>
+        <button type="button" id="btnUserLogout" class="btn-user-logout">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="equipos-main">
+
+  <div class="equipos-container">
+
+  <div class="welcome-card equipos-form-card">
+    <h2>Registrar Equipo Biomédico</h2>
+
+    <form id="equipoForm" class="equipo-form-grid">
+      <input type="text" id="nombre" placeholder="Nombre del equipo" required>
+      <input type="text" id="marca" placeholder="Marca">
+      <input type="text" id="modelo" placeholder="Modelo">
+      <input type="text" id="ubicacion" placeholder="Ubicación">
+      <select id="estado">
+        <option value="Operativo">Operativo</option>
+        <option value="Mantenimiento">Mantenimiento</option>
+        <option value="Fuera de Servicio">Fuera de Servicio</option>
+      </select>
+      <div class="form-field">
+        <label for="proximo_mantenimiento">Próximo mantenimiento</label>
+        <input type="date" id="proximo_mantenimiento">
+      </div>
+      <hr class="form-full-width">
+      <h3 class="form-full-width">Último mantenimiento</h3>
+      <div class="form-field">
+        <label for="ultimo_mantenimiento_fecha">Fecha</label>
+        <input type="date" id="ultimo_mantenimiento_fecha">
+      </div>
+      <div class="form-field">
+        <label for="ultimo_mantenimiento_tecnico">Técnico responsable</label>
+        <input type="text" id="ultimo_mantenimiento_tecnico" placeholder="Nombre del técnico">
+      </div>
+      <div class="form-field">
+        <label for="ultimo_mantenimiento_tipo">Tipo de mantenimiento</label>
+        <select id="ultimo_mantenimiento_tipo">
+          <option value="">Seleccionar tipo</option>
+          <option value="Preventivo">Preventivo</option>
+          <option value="Correctivo">Correctivo</option>
+          <option value="Calibración">Calibración</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+      <button type="submit" class="form-full-width">
+        Guardar Equipo
+      </button>
+    </form>
+
+    <p id="mensaje"></p>
+  </div>
+
+  <div class="welcome-card equipos-list-card">
+    <h2>Equipos registrados</h2>
+    <div class="equipos-tabs" role="tablist" aria-label="Equipos e historial">
+      <button type="button" id="tabBtnEquipos" class="equipos-tab-btn active" role="tab" aria-selected="true">Equipos</button>
+      <button type="button" id="tabBtnHistorial" class="equipos-tab-btn" role="tab" aria-selected="false">Historial</button>
+    </div>
+    <p id="mensajeTabla"></p>
+    <div id="tabEquiposPanel" role="tabpanel">
+      <div class="equipos-cards-container" id="equiposBody"></div>
+    </div>
+    <div id="tabHistorialPanel" class="hidden" role="tabpanel">
+      <div class="audit-toolbar">
+        <button type="button" id="btnAuditRefresh" class="audit-refresh">Actualizar historial</button>
+        <small id="auditHint" class="audit-hint">Muestra los últimos cambios realizados.</small>
+      </div>
+      <div id="auditMensaje" class="audit-message"></div>
+      <div id="auditList" class="audit-list"></div>
+    </div>
+  </div>
+
+  </div>
+
+</main>
+
+<script src="js/auth.js"></script>
+<script src="js/session.js"></script>
+<script src="js/equipos.js"></script>
+<script src="js/user-menu.js"></script>
+
+</body>
+</html>

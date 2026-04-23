@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Iniciar sesión - BioPulze">
+    <title>Login - BioPulze</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230d9488'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-nav">BioPulze</div>
+</header>
+
+<main class="main-auth">
+    <div class="auth-branding">
+        <div class="auth-branding-card">
+            <h2>BioPulze</h2>
+            <p>Gestión de equipos biomédicos: mantenimientos, calibraciones y reportes en un solo lugar. Accede a tu cuenta para continuar.</p>
+        </div>
+    </div>
+    <div class="auth-form-wrap">
+        <div class="welcome-card">
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <input type="email" id="email" placeholder="Correo" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+                <a href="#" id="linkOlvide" class="link-olvide">¿Olvidaste tu contraseña?</a>
+            </form>
+            <form id="loginVerifyForm" style="display:none; margin-top: 15px;">
+                <p>Hemos enviado un código a tu correo. Ingrésalo para completar el inicio de sesión.</p>
+                <input type="text" id="loginCodigo" placeholder="Código de 6 dígitos" required>
+                <button type="submit">Verificar código</button>
+                <button type="button" id="btnLoginResendCode" disabled style="margin-top: 8px; font-size: 0.875rem; background: transparent; color: var(--primary); border: none; cursor: pointer; text-decoration: underline;">Volver a enviar código (<span id="loginCountdown">10</span>s)</button>
+            </form>
+            <form id="forgotForm" style="display:none; margin-top: 15px;">
+                <p>Ingresa tu correo y te enviaremos un código para restablecer tu contraseña.</p>
+                <input type="email" id="forgotEmail" placeholder="Correo" required>
+                <button type="submit">Enviar código</button>
+            </form>
+            <form id="resetForm" style="display:none; margin-top: 15px;">
+                <p>Ingresa el código que recibiste y tu nueva contraseña.</p>
+                <input type="text" id="resetCodigo" placeholder="Código de 6 dígitos" required>
+                <input type="password" id="resetPassword" placeholder="Nueva contraseña (mín. 8 caracteres)" required minlength="8">
+                <button type="submit">Cambiar contraseña</button>
+            </form>
+            <p id="message"></p>
+            <a href="index.html" id="linkVolver">Volver</a>
+        </div>
+    </div>
+</main>
+
+<script src="js/toast.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>
