@@ -10,7 +10,13 @@ registerForm.addEventListener("submit", async (e) => {
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const phone = document.getElementById("phone").value.trim();
+  const cargo = document.getElementById("cargo").value.trim();
   const password = document.getElementById("password").value;
+
+  if (!cargo) {
+    messageEl.innerText = "El cargo es obligatorio.";
+    return;
+  }
 
   if (password.length < 8) {
     messageEl.innerText = "La contraseña debe tener al menos 8 caracteres.";
@@ -27,6 +33,7 @@ registerForm.addEventListener("submit", async (e) => {
         nombre: name,
         correo: email,
         telefono: phone,
+        cargo: cargo,
         password: password
       })
     });

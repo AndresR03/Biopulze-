@@ -81,6 +81,54 @@
 
 </div>
 
+<section class="dashboard-analytics" aria-label="Analítica de mantenimientos">
+    <div class="analytics-card">
+        <div class="analytics-card-head">
+            <h3>Estado de equipos (visión general)</h3>
+            <small>Activos / Próximos / Vencidos / Fuera de servicio</small>
+        </div>
+        <div class="chart-wrap chart-wrap--donut">
+            <canvas id="chartEstado" aria-label="Gráfica de estado de equipos" role="img"></canvas>
+        </div>
+        <div class="chart-footnote" id="chartEstadoNote"></div>
+    </div>
+
+    <div class="analytics-card">
+        <div class="analytics-card-head">
+            <h3>Mantenimientos en el tiempo</h3>
+            <small>Por mes, dividido por tipo</small>
+        </div>
+        <div class="chart-wrap">
+            <canvas id="chartMantenimientos" aria-label="Gráfica de mantenimientos por mes" role="img"></canvas>
+        </div>
+        <div class="chart-footnote" id="chartMantenimientosNote"></div>
+    </div>
+
+    <div class="analytics-card">
+        <div class="analytics-card-head">
+            <h3>Cumplimiento de mantenimiento</h3>
+            <small>% a tiempo vs retrasados (según fecha próxima)</small>
+        </div>
+        <div class="gauge" aria-label="Cumplimiento de mantenimiento">
+            <div class="gauge-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="gauge-seg gauge-seg--ok" id="gaugeOk" style="width:0%"></div>
+                <div class="gauge-seg gauge-seg--late" id="gaugeLate" style="width:0%"></div>
+            </div>
+            <div class="gauge-meta">
+                <div class="gauge-metric">
+                    <strong id="cumplimientoPct">0%</strong>
+                    <span>A tiempo</span>
+                </div>
+                <div class="gauge-legend">
+                    <span class="badge badge--ok">A tiempo: <strong id="cumplimientoOnTime">0</strong></span>
+                    <span class="badge badge--late">Retrasados: <strong id="cumplimientoLate">0</strong></span>
+                </div>
+            </div>
+        </div>
+        <div class="chart-footnote" id="cumplimientoNote"></div>
+    </div>
+</section>
+
 <div class="maintenance-container">
     <div class="maintenance-card">
         <h3>Próximos mantenimientos</h3>
@@ -101,6 +149,7 @@
 
 <script src="js/auth.js"></script>
 <script src="js/session.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/user-menu.js"></script>
 

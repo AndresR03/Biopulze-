@@ -10,12 +10,13 @@ const MIN_PASSWORD_LENGTH = 8;
 
 // ================= REGISTER con 2FA (código solo por correo) =================
 export const register = async (req, res) => {
-  const { nombre, correo, password, telefono } = req.body;
+  const { nombre, correo, password, telefono, cargo } = req.body;
+  const cargoTrim = cargo != null ? String(cargo).trim() : "";
 
-  if (!nombre || !correo || !password || !telefono) {
+  if (!nombre || !correo || !password || !telefono || !cargoTrim) {
     return res
       .status(400)
-      .json({ mensaje: "Todos los campos son obligatorios (incluye teléfono)" });
+      .json({ mensaje: "Todos los campos son obligatorios (incluye teléfono y cargo)" });
   }
 
   if (password.length < MIN_PASSWORD_LENGTH) {
@@ -46,51 +47,66 @@ export const register = async (req, res) => {
 
       const insertSql = `
         INSERT INTO usuarios
+        (nombre, correo, telefono, cargo, preferencia_codigo, password, verificado, codigo_2fa, codigo_2fa_expira)
+        VALUES (?, ?, ?, ?, 'email', ?, 0, ?, DATE_ADD(NOW(), INTERVAL 10 MINUTE))
+      `;
+      const insertSqlSinPreferencia = `
+        INSERT INTO usuarios
+        (nombre, correo, telefono, cargo, password, verificado, codigo_2fa, codigo_2fa_expira)
+        VALUES (?, ?, ?, ?, ?, 0, ?, DATE_ADD(NOW(), INTERVAL 10 MINUTE))
+      `;
+      const insertSqlSinCargo = `
+        INSERT INTO usuarios
         (nombre, correo, telefono, preferencia_codigo, password, verificado, codigo_2fa, codigo_2fa_expira)
         VALUES (?, ?, ?, 'email', ?, 0, ?, DATE_ADD(NOW(), INTERVAL 10 MINUTE))
       `;
-      const insertSqlSinPreferencia = `
+      const insertSqlLegacy = `
         INSERT INTO usuarios
         (nombre, correo, telefono, password, verificado, codigo_2fa, codigo_2fa_expira)
         VALUES (?, ?, ?, ?, 0, ?, DATE_ADD(NOW(), INTERVAL 10 MINUTE))
       `;
 
-      db.query(
-        insertSql,
-        [nombre, correo, telefono, hashedPassword, codigo],
-        async (err2) => {
-          if (err2 && err2.code === "ER_BAD_FIELD_ERROR") {
-            return db.query(
-              insertSqlSinPreferencia,
-              [nombre, correo, telefono, hashedPassword, codigo],
-              async (err3) => {
-                if (err3) {
-                  console.error(err3);
-                  return res.status(500).json({ mensaje: "Error al registrar usuario" });
-                }
-                await enviarCodigo2FA("email", correo, "", codigo);
-                return res.json({
-                  mensaje: "Registro correcto. Revisa tu correo e ingresa el código para activar la cuenta.",
-                  requiere2FA: true,
-                  correo
-                });
-              }
-            );
-          }
-          if (err2) {
-            console.error(err2);
-            return res
-              .status(500)
-              .json({ mensaje: "Error al registrar usuario" });
-          }
+      const responderRegistroOk = async () => {
+        await enviarCodigo2FA("email", correo, "", codigo);
+        res.json({
+          mensaje: "Registro correcto. Revisa tu correo e ingresa el código para activar la cuenta.",
+          requiere2FA: true,
+          correo
+        });
+      };
 
-          await enviarCodigo2FA("email", correo, "", codigo);
-          res.json({
-            mensaje: "Registro correcto. Revisa tu correo e ingresa el código para activar la cuenta.",
-            requiere2FA: true,
-            correo
-          });
-        }
+      const intentarInsert = (sql, params, siguiente) => {
+        db.query(sql, params, async (errInsert) => {
+          if (errInsert && errInsert.code === "ER_BAD_FIELD_ERROR" && siguiente) {
+            return siguiente();
+          }
+          if (errInsert) {
+            console.error(errInsert);
+            return res.status(500).json({ mensaje: "Error al registrar usuario" });
+          }
+          await responderRegistroOk();
+        });
+      };
+
+      intentarInsert(
+        insertSql,
+        [nombre, correo, telefono, cargoTrim, hashedPassword, codigo],
+        () =>
+          intentarInsert(
+            insertSqlSinPreferencia,
+            [nombre, correo, telefono, cargoTrim, hashedPassword, codigo],
+            () =>
+              intentarInsert(
+                insertSqlSinCargo,
+                [nombre, correo, telefono, hashedPassword, codigo],
+                () =>
+                  intentarInsert(
+                    insertSqlLegacy,
+                    [nombre, correo, telefono, hashedPassword, codigo],
+                    null
+                  )
+              )
+          )
       );
     });
   } catch (error) {

@@ -24,6 +24,7 @@ describe("POST /register - validación", () => {
       .send({
         correo: "test@test.com",
         telefono: "+573001234567",
+        cargo: "Técnico",
         password: "password123"
       });
     expect(res.status).toBe(400);
@@ -37,6 +38,7 @@ describe("POST /register - validación", () => {
         nombre: "Test",
         correo: "test@test.com",
         telefono: "+573001234567",
+        cargo: "Técnico",
         password: "1234567"
       });
     expect(res.status).toBe(400);
@@ -49,9 +51,23 @@ describe("POST /register - validación", () => {
       .send({
         nombre: "Test",
         telefono: "+573001234567",
+        cargo: "Técnico",
         password: "password123"
       });
     expect(res.status).toBe(400);
+  });
+
+  it("falta cargo → 400", async () => {
+    const res = await request(app)
+      .post("/register")
+      .send({
+        nombre: "Test",
+        correo: "test@test.com",
+        telefono: "+573001234567",
+        password: "password123"
+      });
+    expect(res.status).toBe(400);
+    expect(res.body.mensaje).toMatch(/cargo|obligatorio/i);
   });
 });
 
